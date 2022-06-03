@@ -23,21 +23,57 @@ const Form = () => {
                 <form onSubmit={handleSubmit(onSubmit)}>
 
                     <div>
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name"><b>Name</b></label>
                         <input type="text" id="name" placeholder="Your Name" {...register("name", {
                             required: {
                                 value: true,
                                 message: 'Name is Required'
                             }
                         })} />
-                        <label>
-                            {errors.name?.type === 'required' && <span>{errors.name?.message}</span>}
+                        <label className='validation'>
+                            {errors.name?.type === 'required' && <span><small>{errors.name?.message}</small></span>}
                         </label>
                     </div>
 
                     <div>
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" placeholder="Your Email" {...register("email", {
+                            required: {
+                                value: true,
+                                message: 'Email is Required'
+                            },
+                            pattern: {
+                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                message: 'Provide a valid Email'
+                            }
+                        })} />
+                        <label htmlFor="email">
+                            {errors.email?.type === 'required' && <span>{errors.email?.message}</span>}
+                            {errors.email?.type === 'pattern' && <span>{errors.email?.message}</span>}
+                        </label>
+                    </div>
+
+                    <div>
+                        <label htmlFor="aadhar">Aadhar </label>
+                        <input type="number" id="aadhar" placeholder="Aadhar No." {...register("email", {
+                            required: {
+                                value: true,
+                                message: 'Email is Required'
+                            },
+                            pattern: {
+                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                message: 'Provide a valid Email'
+                            }
+                        })} />
+                        <label htmlFor="email">
+                            {errors.email?.type === 'required' && <span>{errors.email?.message}</span>}
+                            {errors.email?.type === 'pattern' && <span>{errors.email?.message}</span>}
+                        </label>
+                    </div>
+
+                    <div>
+                        <label htmlFor="pan">PAN card</label>
+                        <input type="text" id="pan" placeholder="PAN card No." {...register("email", {
                             required: {
                                 value: true,
                                 message: 'Email is Required'

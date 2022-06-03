@@ -1,11 +1,19 @@
+.form-div {
+    width: 50%;
+    margin: 40px auto;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
 label {
     display: block;
-    text-align: left;
+    width: 30%;
 }
 
 input[type=email],
 select {
-    width: 100%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -16,7 +24,29 @@ select {
 
 input[type=text],
 select {
-    width: 100%;
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=number],
+select {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=password],
+select {
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -26,7 +56,7 @@ select {
 }
 
 input[type=submit] {
-    width: 100%;
+    width: 30%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -42,10 +72,11 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-.form-div {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
+.validation {
+    display: block;
+    padding-left: 28px;
+    color: red;
+    margin-bottom: 22px;
 }
 
 /* div {

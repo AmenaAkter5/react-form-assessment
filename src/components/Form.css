@@ -74,7 +74,30 @@ input[type=submit]:hover {
 
 .name-validation {
     display: block;
-    padding-left: 46px;
+    padding-left: 30px;
+    color: red;
+    margin-bottom: 22px;
+}
+
+.email-validation {
+    display: block;
+    padding-left: 30px;
+    color: red;
+    margin-bottom: 22px;
+}
+
+.aadhar-validation {
+    width: 50%;
+    display: block;
+    padding-left: 30px;
+    color: red;
+    margin-bottom: 22px;
+}
+
+.pan-validation {
+    width: 50%;
+    display: block;
+    padding-left: 30px;
     color: red;
     margin-bottom: 22px;
 }

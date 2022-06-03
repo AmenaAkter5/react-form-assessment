@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Form.css';
-/* import Validate, { ValidationItems, ValidationButton } from 'react-real-time-form-validation';
-
-const formValidation = new Validate(); */
 
 
 const Form = () => {
 
-    const [formError, setFormError] = useState('');
+    const [nameError, setNameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [aadharError, setAadharError] = useState('');
+    const [panError, setPanError] = useState('');
 
     // use react hook form
-    const { register, formState: { errors }, handleSubmit } = useForm({ shouldUseNativeValidation: true });
+    const { register, formState: { errors }, getValues, handleSubmit } = useForm({ shouldUseNativeValidation: true });
 
 
     // form submit
@@ -22,34 +22,72 @@ const Form = () => {
 
     // name field on change handler
     const nameChange = (event) => {
-        console.log(event.target.value);
-        const name = event.target.value;
-        if (name === '' || name.length <= 2) {
-            setFormError('Name is Required')
+        // console.log(event.target.value);
+        // const nameValue = event.target.value;
+
+        const name = getValues("name");
+        if (name === '' || name.length < 2) {
+            setNameError('Name is Required')
         }
         else {
-            setFormError('');
+            setNameError('');
         }
     }
 
-    /* const nameChange = (event) => {
+    const emailChange = event => {
         console.log(event.target.value);
-        const name = event.target.value;
-    } */
+        // const emailValue = event.target.value;
 
-    /* const nameChange = (event) => {
-        formValidation.onChangeStatus(event.target.value);
-        // formValidation.onChangeStatus(getValues("name"));
-    } */
-
-    /* const componentDidMount = () => {
-
-        formValidation.createValidation('name', 'notBlank', 'Name cannot be blank');
-
-        // formValidation.createValidation('gpa', (gpa) => gpa <= 4, 'Gpa must be less than or equal to 4');
-        // formValidation.createValidation('gpa', (gpa) => gpa >= 0, 'Gpa must be greater than or equal to 0');
+        /* const email = getValues("email");
+        const pattern = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/; */
+        /* const pattern = /[a-z0-9]+@[a-z]+\.[a-z]{0,3}/g;
+        const test = email.matchAll(pattern); */
+        /* if (pattern.test(email)) {
+            setEmailError('');
+        }
+        else {
+            setEmailError('Provide a valid Email');
+        } */
+        /* if (test === pattern) {
+            setEmailError('');
+        }
+        else {
+            setEmailError('Provide a valid Email');
+        } */
     }
- */
+
+
+    const aadharChange = (event) => {
+
+        const aadharValue = getValues("aadhar");
+        if (aadharValue < 0) {
+            setAadharError('Sorry!! Input right number!');
+            return;
+        }
+        else if (aadharValue === '' || aadharValue.length !== 12) {
+            setAadharError('Aadhar Must be have in 12 characters');
+        }
+        else {
+            setAadharError('');
+        }
+    }
+
+
+    const panChange = (event) => {
+
+        const pan = getValues("pan");
+
+        const pattern = /^(?=.*[A-Z].*[A-Z].*[A-Z].*[A-Z].*[A-Z])(?=.*[0-9].*[0-9].*[0-9].*[0-9])(?=.*[A-Z]).{10}$/;
+
+        if (!pattern.test(pan)) {
+            console.log(pattern.test(pan))
+            setPanError('Input right PAN number');
+        }
+        else {
+            setPanError('');
+        }
+    }
+
 
     return (
         <div>
@@ -67,9 +105,9 @@ const Form = () => {
                             },
                             onChange: nameChange
                         })} />
-                        <label className='name-validation'>
+                        <label htmlFor="name" className='name-validation'>
                             {errors.name && errors.name?.type === 'required' && <span><small>{errors.name?.message}</small></span>}
-                            {formError}
+                            {nameError}
                         </label>
                     </div>
 
@@ -81,71 +119,63 @@ const Form = () => {
                                 message: 'Email is Required'
                             },
                             pattern: {
-                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                value: /[a-z][0-9]+@[a-z]+\.[a-z]{2,3}/,
                                 message: 'Provide a valid Email'
-                            }
+                            },
+                            onChange: emailChange
                         })} />
-                        <label htmlFor="email">
+                        <label className='email-validation' htmlFor="email">
                             {errors.email?.type === 'required' && <span>{errors.email?.message}</span>}
                             {errors.email?.type === 'pattern' && <span>{errors.email?.message}</span>}
+                            {emailError}
                         </label>
                     </div>
 
                     <div>
                         <label htmlFor="aadhar"><b>Aadhar</b> </label>
-                        <input type="number" id="aadhar" placeholder="Aadhar No." {...register("email", {
+                        <input type="number" id="aadhar" placeholder="Aadhar No." {...register("aadhar", {
                             required: {
                                 value: true,
-                                message: 'Email is Required'
+                                message: 'Aadhar is Required'
                             },
-                            pattern: {
-                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                message: 'Provide a valid Email'
-                            }
+                            minLength: {
+                                value: 12,
+                                message: 'Aadhar Must be have in 12 characters'
+                            },
+                            maxLength: {
+                                value: 12,
+                                message: 'Must be have 12 characters'
+                            },
+                            onChange: aadharChange
                         })} />
-                        <label htmlFor="email">
-                            {errors.email?.type === 'required' && <span>{errors.email?.message}</span>}
-                            {errors.email?.type === 'pattern' && <span>{errors.email?.message}</span>}
+                        <label className='aadhar-validation' htmlFor="aadhar">
+                            {errors.aadhar?.type === 'required' && <span>{errors.aadhar?.message}</span>}
+                            {errors.aadhar?.type === 'minLength' && <span>{errors.aadhar?.message}</span>}
+                            {aadharError}
                         </label>
                     </div>
 
                     <div>
                         <label htmlFor="pan"><b>PAN card</b></label>
-                        <input type="text" id="pan" placeholder="PAN card No." {...register("email", {
+                        <input type="text" id="pan" placeholder="PAN card No." {...register("pan", {
                             required: {
                                 value: true,
-                                message: 'Email is Required'
+                                message: 'PAN is Required'
                             },
                             pattern: {
-                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                message: 'Provide a valid Email'
-                            }
-                        })} />
-                        <label htmlFor="email">
-                            {errors.email?.type === 'required' && <span>{errors.email?.message}</span>}
-                            {errors.email?.type === 'pattern' && <span>{errors.email?.message}</span>}
-                        </label>
-                    </div>
-
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id='password' placeholder="Your Password" {...register("password", {
-                            required: {
-                                value: true,
-                                message: 'Password is Required'
+                                value: /^(?=.*[A-Z].*[A-Z].*[A-Z].*[A-Z].*[A-Z])(?=.*[0-9].*[0-9].*[0-9].*[0-9])(?=.*[A-Z]).{10}$/,
+                                message: 'Provide a valid PAN'
                             },
-                            minLength: {
-                                value: 6,
-                                message: 'Must be 6 characters or longer'
-                            }
+                            onChange: panChange
                         })} />
-                        <label>
-                            {errors.password?.type === 'required' && <span>{errors.password?.message}</span>}
-                            {errors.password?.type === 'minLength' && <span>{errors.password?.message}</span>}
+                        <label className='pan-validation' htmlFor="pan">
+                            {errors.pan?.type === 'required' && <span>{errors.pan?.message}</span>}
+                            {errors.pan?.type === 'pattern' && <span>{errors.pan?.message}</span>}
+                            {panError}
                         </label>
                     </div>
 
-                    <input disabled={formError} type="submit" value="Submit" />
+                    <input type="submit" value="Submit" />
                 </form>
             </div>
         </div>

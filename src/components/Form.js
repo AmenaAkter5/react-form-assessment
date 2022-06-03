@@ -35,6 +35,8 @@ const Form = () => {
         }
     }
 
+
+    // email field on change handler
     const emailChange = event => {
 
         const email = getValues("email");
@@ -49,6 +51,7 @@ const Form = () => {
     }
 
 
+    // aadhar field on change handler
     const aadharChange = (event) => {
 
         const aadharValue = getValues("aadhar");
@@ -65,6 +68,7 @@ const Form = () => {
     }
 
 
+    // PAN field on change handler
     const panChange = (event) => {
 
         const pan = getValues("pan");

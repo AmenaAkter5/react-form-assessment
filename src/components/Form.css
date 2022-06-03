@@ -72,9 +72,9 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-.validation {
+.name-validation {
     display: block;
-    padding-left: 28px;
+    padding-left: 46px;
     color: red;
     margin-bottom: 22px;
 }

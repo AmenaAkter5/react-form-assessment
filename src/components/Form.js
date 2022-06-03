@@ -5,13 +5,16 @@ import './Form.css';
 
 const Form = () => {
 
+    // validation state
     const [nameError, setNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [aadharError, setAadharError] = useState('');
     const [panError, setPanError] = useState('');
 
+
     // use react hook form
     const { register, formState: { errors }, getValues, handleSubmit } = useForm({ shouldUseNativeValidation: true });
+
 
 
     // form submit
@@ -22,8 +25,6 @@ const Form = () => {
 
     // name field on change handler
     const nameChange = (event) => {
-        // console.log(event.target.value);
-        // const nameValue = event.target.value;
 
         const name = getValues("name");
         if (name === '' || name.length < 2) {
@@ -35,25 +36,16 @@ const Form = () => {
     }
 
     const emailChange = event => {
-        console.log(event.target.value);
-        // const emailValue = event.target.value;
 
-        /* const email = getValues("email");
-        const pattern = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/; */
-        /* const pattern = /[a-z0-9]+@[a-z]+\.[a-z]{0,3}/g;
-        const test = email.matchAll(pattern); */
-        /* if (pattern.test(email)) {
-            setEmailError('');
+        const email = getValues("email");
+        const pattern = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+
+        if (!pattern.test(email)) {
+            setEmailError('Provide a valid Email');
         }
         else {
-            setEmailError('Provide a valid Email');
-        } */
-        /* if (test === pattern) {
             setEmailError('');
         }
-        else {
-            setEmailError('Provide a valid Email');
-        } */
     }
 
 
@@ -119,7 +111,7 @@ const Form = () => {
                                 message: 'Email is Required'
                             },
                             pattern: {
-                                value: /[a-z][0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
                                 message: 'Provide a valid Email'
                             },
                             onChange: emailChange
